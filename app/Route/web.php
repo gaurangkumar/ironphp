@@ -1,23 +1,23 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
-
 use Friday\Http\Route;
 
-/**
+/*
  *--------------------------------------------------------------------------
  * Web Routes
  *--------------------------------------------------------------------------
@@ -35,14 +35,16 @@ Route::get('/page1', 'IndexController@Index');
 Route::get('/member/{name}/{?id}', function ($name, $id = 1) {
     echo "Name: [$id] $name";
     echo '<br>Num of Ars: '.func_num_args();
-    echo '<br>Ars: ';print_r(func_get_args());
+    echo '<br>Ars: ';
+    print_r(func_get_args());
 });
 
 //route with optional arguments - must pass default  argument
 Route::get('/user/{?name}/', function ($name = 'GK') {
     echo "Name: $name";
     echo '<br>Num of Ars: '.func_num_args();
-    echo '<br>Ars: ';print_r(func_get_args());
+    echo '<br>Ars: ';
+    print_r(func_get_args());
 });
 
 //route with multiple arguments - must be in sequence

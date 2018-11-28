@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -19,7 +20,6 @@ namespace Friday\Console;
 
 class Commands
 {
-
     /**
      * Application instance.
      *
@@ -44,18 +44,18 @@ class Commands
      */
     public function help($command = null)
     {
-        print "".\Friday\Console\Colors::LIGHT_BLUE."
+        echo ''.\Friday\Console\Colors::LIGHT_BLUE.'
 ---------------------------------------------------------------
-".\Friday\Console\Colors::GREEN."IronPHP".\Friday\Console\Colors::WHITE." Framework ".\Friday\Console\Colors::YELLOW."".$this->app->version()."".\Friday\Console\Colors::LIGHT_BLUE."
+'.\Friday\Console\Colors::GREEN.'IronPHP'.\Friday\Console\Colors::WHITE.' Framework '.\Friday\Console\Colors::YELLOW.''.$this->app->version().''.\Friday\Console\Colors::LIGHT_BLUE.'
 ---------------------------------------------------------------
-".\Friday\Console\Colors::YELLOW."Usage:
-".\Friday\Console\Colors::WHITE."  command [options] [arguments]\n
-".\Friday\Console\Colors::YELLOW."Options:
-".\Friday\Console\Colors::GREEN."  -h, --help".\Friday\Console\Colors::WHITE."\t\tDisplay this help message\n
-".\Friday\Console\Colors::GREEN."Available commands:
-".\Friday\Console\Colors::GREEN."  serve".\Friday\Console\Colors::WHITE."\t\t- Serve the application on the PHP development server
-".\Friday\Console\Colors::GREEN."  version".\Friday\Console\Colors::WHITE."\t- Display Version
-".\Friday\Console\Colors::GREEN."  help".\Friday\Console\Colors::WHITE."\t\t- Displays help for a command\n";
+'.\Friday\Console\Colors::YELLOW.'Usage:
+'.\Friday\Console\Colors::WHITE."  command [options] [arguments]\n
+".\Friday\Console\Colors::YELLOW.'Options:
+'.\Friday\Console\Colors::GREEN.'  -h, --help'.\Friday\Console\Colors::WHITE."\t\tDisplay this help message\n
+".\Friday\Console\Colors::GREEN.'Available commands:
+'.\Friday\Console\Colors::GREEN.'  serve'.\Friday\Console\Colors::WHITE."\t\t- Serve the application on the PHP development server
+".\Friday\Console\Colors::GREEN.'  version'.\Friday\Console\Colors::WHITE."\t- Display Version
+".\Friday\Console\Colors::GREEN.'  help'.\Friday\Console\Colors::WHITE."\t\t- Displays help for a command\n";
         echo \Friday\Console\Colors::BG_BLACK.''.\Friday\Console\Colors::WHITE;
     }
 
@@ -68,8 +68,8 @@ class Commands
     {
         $url = 'https://repo.packagist.org/p/ironphp/ironphp.json';
         $packagistJson = @file_get_contents($url);
-        if($packagistJson === true) {
-            $packagistArray = json_decode($packagistJson,true);
+        if ($packagistJson === true) {
+            $packagistArray = json_decode($packagistJson, true);
             $packagistData = $packagistArray['packages']['ironphp/ironphp']['dev-master'];
             $time = $packagistData['time'];
             $version = $packagistData['version']; //dev-master
@@ -81,7 +81,7 @@ class Commands
         $installData = $this->app->getIntallTime();
 
         echo \Friday\Console\Colors::RED.''.\Friday\Console\Colors::BG_BLACK;
-        print "
+        echo "
 _________  _______    ______   _____    ___  _______   ___   ___  _______
 |       |  | ___  \  /      \  |    \   | |  |  __  \  | |   | |  |  __  \
 ```| |```  | |  | |  | /``\ |  | |\  \  | |  | |  |  | | |___| |  | |  |  |
@@ -90,26 +90,23 @@ ___| |___  | |`\ \   | \  / |  | |  \  \| |  | |````   | |```| |  | |````
 |       |  | |  \ \  \  ``  /  | |   \    |  | |       | |   | |  | |
 `````````  ```   ```  ``````    ``    `````  ```       ```   ```  ```   
 ";
-echo \Friday\Console\Colors::GREEN."
-IronPHP ".\Friday\Console\Colors::WHITE."Framework ".\Friday\Console\Colors::BROWN.$this->app->version();
+        echo \Friday\Console\Colors::GREEN.'
+IronPHP '.\Friday\Console\Colors::WHITE.'Framework '.\Friday\Console\Colors::BROWN.$this->app->version();
 
-        if($packagistJson === true) {
-            echo \Friday\Console\Colors::WHITE." ".str_replace('T', ' ', substr(date(DATE_ATOM, $timeStamp), 0, 19));
+        if ($packagistJson === true) {
+            echo \Friday\Console\Colors::WHITE.' '.str_replace('T', ' ', substr(date(DATE_ATOM, $timeStamp), 0, 19));
             echo \Friday\Console\Colors::GREEN."\nChecking updates... ".\Friday\Console\Colors::WHITE;
-            if($timeStamp > $installData->time) {
-                if($branchAlias != $this->app->version()) {
-                    print "Package have an update ".$branchAlias;
+            if ($timeStamp > $installData->time) {
+                if ($branchAlias != $this->app->version()) {
+                    echo 'Package have an update '.$branchAlias;
+                } else {
+                    echo 'Package have an update '.$version;
                 }
-                else {
-                    print "Package have an update ".$version;
-                }
+            } else {
+                echo 'There is no update.';
             }
-            else {
-                print "There is no update.";
-            }
-        }
-        else {
-            echo \Friday\Console\Colors::GREEN."\nChecking updates... ".\Friday\Console\Colors::WHITE." No internet!";
+        } else {
+            echo \Friday\Console\Colors::GREEN."\nChecking updates... ".\Friday\Console\Colors::WHITE.' No internet!';
         }
         echo \Friday\Console\Colors::BG_BLACK.''.\Friday\Console\Colors::WHITE;
     }
@@ -121,11 +118,11 @@ IronPHP ".\Friday\Console\Colors::WHITE."Framework ".\Friday\Console\Colors::BRO
      */
     public function serve($port = '8000')
     {
-        print "".\Friday\Console\Colors::LIGHT_BLUE."
+        echo ''.\Friday\Console\Colors::LIGHT_BLUE.'
 ---------------------------------------------------------------
-Welcome to ".\Friday\Console\Colors::GREEN."IronPHP".\Friday\Console\Colors::WHITE." Framework ".\Friday\Console\Colors::YELLOW."".$this->app->version().\Friday\Console\Colors::WHITE." Console".\Friday\Console\Colors::LIGHT_BLUE."
+Welcome to '.\Friday\Console\Colors::GREEN.'IronPHP'.\Friday\Console\Colors::WHITE.' Framework '.\Friday\Console\Colors::YELLOW.''.$this->app->version().\Friday\Console\Colors::WHITE.' Console'.\Friday\Console\Colors::LIGHT_BLUE.'
 ---------------------------------------------------------------
-".\Friday\Console\Colors::LIGHT_CYAN."Built-in development server started: ".\Friday\Console\Colors::YELLOW."<http://localhost:$port>".\Friday\Console\Colors::WHITE."
+'.\Friday\Console\Colors::LIGHT_CYAN.'Built-in development server started: '.\Friday\Console\Colors::YELLOW."<http://localhost:$port>".\Friday\Console\Colors::WHITE."
 You can exit with `CTRL-C`\n";
         echo exec("php -S localhost:$port", $output);
         print_r($output);
@@ -136,7 +133,8 @@ You can exit with `CTRL-C`\n";
      *
      * @return void
      */
-    public function key() {
+    public function key()
+    {
         $this->app->setKey();
     }
 }

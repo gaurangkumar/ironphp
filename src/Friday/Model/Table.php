@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -20,35 +21,35 @@ namespace Friday\Model;
 class Table
 {
     /**
-     * Name of the table as it can be found in the database
+     * Name of the table as it can be found in the database.
      *
      * @var string
      */
     protected $_table;
 
     /**
-     * Connection instance
+     * Connection instance.
      *
      * @var \Cake\Database\Connection
      */
     protected $_connection;
 
     /**
-     * The schema object containing a description of this table fields
+     * The schema object containing a description of this table fields.
      *
      * @var \Cake\Database\Schema\TableSchema
      */
     protected $_schema;
 
     /**
-     * The name of the field that represents the primary key in the table
+     * The name of the field that represents the primary key in the table.
      *
      * @var string|array
      */
     protected $_primaryKey;
 
     /**
-     * The name of the field that represents a human readable representation of a row
+     * The name of the field that represents a human readable representation of a row.
      *
      * @var string
      */
@@ -62,77 +63,77 @@ class Table
     protected $_associations;
 
     /**
-     * BehaviorRegistry for this table
+     * BehaviorRegistry for this table.
      *
      * @var \Cake\ORM\BehaviorRegistry
      */
     protected $_behaviors;
 
     /**
-     * The name of the class that represent a single row for this table
+     * The name of the class that represent a single row for this table.
      *
      * @var string
      */
     protected $_entityClass;
 
     /**
-     * Registry key used to create this table object
+     * Registry key used to create this table object.
      *
      * @var string
      */
     protected $_registryAlias;
 
     /**
-     * Instance of MYSQLi
+     * Instance of MYSQLi.
      *
      * @var \MYSQLi
      */
     private $connection;
 
     /**
-     * Connection error no
+     * Connection error no.
      *
      * @var int
      */
     private $connect_errno;
 
     /**
-     * Connection error name
+     * Connection error name.
      *
      * @var string
      */
     private $connect_error;
 
     /**
-     * Query error no
+     * Query error no.
      *
      * @var int
      */
     private $errno;
 
     /**
-     * Query error name
+     * Query error name.
      *
      * @var string
      */
     private $error;
 
     /**
-     * Table name
+     * Table name.
      *
      * @var string
      */
     private $table;
 
     /**
-     * WHERE clause
+     * WHERE clause.
      *
      * @var string
      */
     private $where;
 
     /**
-     * ORDER BY clause
+     * ORDER BY clause.
      *
      * @var array
      */
@@ -155,9 +156,9 @@ class Table
     /**
      * Create a new Table instance.
      *
-     * @param  array  $config
-     * @return \MYSQLi
+     * @param array $config
      *
+     * @return \MYSQLi
      */
     public function __construct(array $config = [])
     {
@@ -238,6 +239,7 @@ class Table
      * ```
      *
      * @param array $config Configuration options passed to the constructor
+     *
      * @return void
      */
     public function initialize(array $config)
@@ -247,8 +249,9 @@ class Table
     /**
      * Sets the database table name.
      *
-     * @param  string  $table
-     * @param  \Friday\Helper\Pagination  $pagination
+     * @param string                    $table
+     * @param \Friday\Helper\Pagination $pagination
+     *
      * @return $this
      */
     public function setTable($table, $pagination)
@@ -281,9 +284,9 @@ class Table
     }
 
     /**
-     * Get field from table
+     * Get field from table.
      *
-     * @param  array|null  $field
+     * @param array|null $field
      * @rturn  array
      */
     public function num_rows()
@@ -291,13 +294,14 @@ class Table
         $sql = $this->query('select');
         $result = $this->execute($sql);
         $data = $result->num_rows;
+
         return $data;
     }
 
     /**
-     * Get field from table
+     * Get field from table.
      *
-     * @param  array|null  $field
+     * @param array|null $field
      * @rturn  array
      */
     public function get($fields = null)
@@ -305,22 +309,24 @@ class Table
         $sql = $this->query('select', $fields);
         $result = $this->execute($sql);
         $data = $result->fetch_array(MYSQLI_ASSOC);
+
         return $data;
     }
 
     /**
-     * Get all fields from table
+     * Get all fields from table.
      *
-     * @param  array|null  $field
+     * @param array|null $field
      * @rturn  array
      */
     public function getAll($fields = null)
     {
         $sql = $this->query('select', $fields);
         $result = $this->execute($sql);
-        while($row = $result->fetch_array(MYSQLI_ASSOC)) {
+        while ($row = $result->fetch_array(MYSQLI_ASSOC)) {
             $data[] = $row;
         }
+
         return $data;
 
         /*
@@ -368,9 +374,9 @@ class Table
     }
 
     /**
-     * Get paginated fields from table
+     * Get paginated fields from table.
      *
-     * @param  array|null  $limit
+     * @param array|null $limit
      * @rturn  array
      */
     public function getPaginated($limit = 1, $fields = null)
@@ -380,247 +386,244 @@ class Table
         $row = $result->fetch_array(MYSQLI_ASSOC);
         $total = $row['num'];
         $this->pagination->initialize($limit, $total);
+
         return $this->limit($limit, $this->pagination->getStartPoint())->getAll();
     }
 
     /**
-     * Add data to table
+     * Add data to table.
      *
-     * @param  string|null  $field
+     * @param string|null $field
      * @rturn  bool
      */
     public function add()
     {
         $field = func_get_args();
-        if(func_num_args() == 0) {
+        if (func_num_args() == 0) {
             echo 'no data to save'; //no argument
             exit;
-        }
-        elseif(func_num_args() == 1) {
-            if(is_array($field[0])) {
+        } elseif (func_num_args() == 1) {
+            if (is_array($field[0])) {
                 $data = $field[0]; //single array with all data
-            }
-            else {
+            } else {
                 $data = $field[0]; //single data without field //string with all/single data
             }
-        }
-        else {
+        } else {
             $data = $field; //more than 1 data without field //string with all/single data
         }
         $sql = $this->query('insert', $data);
         $result = $this->execute($sql);
+
         return $result;
     }
 
     /**
-     * Update data to table
+     * Update data to table.
      *
-     * @param  string|null  $field
+     * @param string|null $field
      * @rturn  bool
      */
     public function update()
     {
         $field = func_get_args();
-        if(func_num_args() == 0) {
+        if (func_num_args() == 0) {
             echo 'no data to save'; //no argument
             exit;
-        }
-        elseif(func_num_args() == 1) {
-            if(is_array($field[0])) {
+        } elseif (func_num_args() == 1) {
+            if (is_array($field[0])) {
                 $data = $field[0]; //single array with all data
-            }
-            else {
+            } else {
                 $data = $field[0]; //sql fraction
             }
-        }
-        else {
+        } else {
             echo 'invalid data';
             exit;
         }
         $sql = $this->query('update', $data);
         $result = $this->execute($sql);
+
         return $result;
     }
 
     /**
-     * Delete data from table
+     * Delete data from table.
      *
      * @rturn  bool
      */
     public function delete()
     {
-        if(func_num_args() != 0) {
+        if (func_num_args() != 0) {
             echo 'invalid';
             exit;
         }
         $sql = $this->query('delete');
         $result = $this->execute($sql);
+
         return $result;
     }
 
     /**
-     * Create WHERE clause
+     * Create WHERE clause.
      *
-     * @param   array  $where
-     * @param   string $glue
-     * @return  $this
+     * @param array  $where
+     * @param string $glue
+     *
+     * @return $this
      */
     public function where($where, $glue = 'AND')
     {
-        if(is_array($where) && count($where) != 0) {
-            foreach($where as $field => $value) {
+        if (is_array($where) && count($where) != 0) {
+            foreach ($where as $field => $value) {
                 $array[] = " `$field` = ".((is_string($value) ? "'$value'" : $value));
             }
-            $this->where = " WHERE".implode(" $glue", $array);
-        }
-        elseif(is_string($where) && trim($where) != '') {
+            $this->where = ' WHERE'.implode(" $glue", $array);
+        } elseif (is_string($where) && trim($where) != '') {
             $where = trim($where);
             $where = trim($where, 'WHERE ');
             $where = rtrim($where);
             $this->where = ' WHERE '.$where;
         }
+
         return $this;
     }
 
     /**
-     * Create ORDER BY clause
+     * Create ORDER BY clause.
      *
-     * @param   string  $field
-     * @param   string  $order
-     * @return  $this
+     * @param string $field
+     * @param string $order
+     *
+     * @return $this
      */
     public function orderBy($field, $order = 'ASC')
     {
-        if(is_string($field) && trim($field) != '') {
+        if (is_string($field) && trim($field) != '') {
             $field = trim($field);
             $field = ltrim($field, 'ORDER BY ');
             $this->order = ' ORDER BY `'.$field.'`'.(($order == 'DESC') ? ' DESC' : ' ASC');
         }
+
         return $this;
     }
 
     /**
-     * Create LIMIT clause
+     * Create LIMIT clause.
      *
-     * @param   int  $start
-     * @param   int  $limit
-     * @return  $this
+     * @param int $start
+     * @param int $limit
+     *
+     * @return $this
      */
     public function limit($limit, $start = null)
     {
-        if(is_int($limit)) {
+        if (is_int($limit)) {
             $build = $limit;
-            if(is_int($start)) {
+            if (is_int($start)) {
                 $build = $start.', '.$limit;
             }
             $this->limit = ' LIMIT '.$build;
         }
+
         return $this;
     }
 
     /**
      * Create sql query.
      *
-     * @param   string       $type
-     * @param   string|null  $field
+     * @param string      $type
+     * @param string|null $field
      *
-     * @return  string
+     * @return string
      */
     public function query($type, $field = null, $extra = null)
     {
-        //SELECT COUNT(*) as `num` 
-        if($type == 'select') {
-            if($field == null) {
-                $field = "*";
-            }
-            elseif(is_array($field)) {
-                foreach($field as $i => $value) {
+        //SELECT COUNT(*) as `num`
+        if ($type == 'select') {
+            if ($field == null) {
+                $field = '*';
+            } elseif (is_array($field)) {
+                foreach ($field as $i => $value) {
                     $field[$i] = '`'.trim($value).'`';
                 }
                 $field = trim(implode(' ,', $field));
             }
             $ex = '';
-            if($extra != null && is_array($extra)) {
-                foreach($extra as $i => $v) {
-                    if($i == 'count') {
+            if ($extra != null && is_array($extra)) {
+                foreach ($extra as $i => $v) {
+                    if ($i == 'count') {
                         $ex .= 'COUNT';
-                        if($v == null) {
+                        if ($v == null) {
                             $ex .= '(*)';
                         }
                     }
-                    if($i == 'field') {
+                    if ($i == 'field') {
                         $ex .= ' as `'.$v.'`';
                     }
                 }
                 $sql = "SELECT $ex FROM `".$this->getTable().'` '.$this->where;
-            }
-            else {
+            } else {
                 $sql = "SELECT $field FROM `".$this->getTable().'` '.$this->where.$this->order.$this->limit;
             }
-        }
-        elseif($type == 'insert') {
-            if(is_array($field)) {
+        } elseif ($type == 'insert') {
+            if (is_array($field)) {
                 $keys = array_keys($field);
-                if($keys[0] === 0) {
+                if ($keys[0] === 0) {
                     $keys = '';
-                }
-                else {
-                    foreach($keys as $i => $key) {
+                } else {
+                    foreach ($keys as $i => $key) {
                         $keys[$i] = ' `'.trim($key).'`';
                     }
                     $keys = implode(',', $keys);
                 }
                 $values = array_values($field);
-                foreach($values as $i => $val) {
+                foreach ($values as $i => $val) {
                     $values[$i] = is_string($val) ? "'$val'" : $val;
                 }
                 $values = implode(' ,', $values);
-            }
-            else {
+            } else {
                 $keys = '';
                 $values = trim($field);
             }
             $values = "($values)";
             $keys = ($keys !== '') ? "($keys)" : '';
-            $sql = "INSERT INTO `".$this->getTable()."` $keys VALUES $values";
-        }
-        elseif($type == 'update') {
-            if(is_array($field)) {
-                foreach($field as $key => $value) {
+            $sql = 'INSERT INTO `'.$this->getTable()."` $keys VALUES $values";
+        } elseif ($type == 'update') {
+            if (is_array($field)) {
+                foreach ($field as $key => $value) {
                     $values[] = " `$key` = ".(is_string($value) ? "'$value'" : $value);
                 }
                 $values = implode(' ,', $values);
-            }
-            else {
+            } else {
                 $values = trim($field);
             }
-            $sql = "UPDATE `".$this->getTable()."` SET $values ".$this->where;
+            $sql = 'UPDATE `'.$this->getTable()."` SET $values ".$this->where;
+        } elseif ($type == 'delete') {
+            $sql = 'DELETE FROM `'.$this->getTable().'` '.$this->where;
         }
-        elseif($type == 'delete') {
-            $sql = "DELETE FROM `".$this->getTable()."` ".$this->where;
-        }
+
         return $sql;
     }
 
     /**
      * Run sql query.
      *
-     * @param   string  $sql
+     * @param string $sql
      *
-     * @return  string
+     * @return string
      */
     public function execute($sql)
     {
         $result = $this->connection->query($sql);
         $this->errno = $this->connection->errno;
         $this->error = $this->connection->error;
-        if($this->connection->errno) {
+        if ($this->connection->errno) {
             echo 'query error: '.$this->error;
         }
-        if($this->connection->errno == 1054) {
+        if ($this->connection->errno == 1054) {
             echo 'database table not set properly';
             exit;
         }
+
         return $result;
     }
 
@@ -628,6 +631,7 @@ class Table
      * Sets the connection instance.
      *
      * @param \Cake\Database\Connection|\Cake\Datasource\ConnectionInterface $connection The connection instance
+     *
      * @return $this
      */
     public function setConnection(ConnectionInterface $connection)
@@ -672,6 +676,7 @@ class Table
      * out of it and used as the schema for this table.
      *
      * @param array|\Cake\Database\Schema\TableSchema $schema Schema to be used for this table
+     *
      * @return $this
      */
     public function setSchema($schema)
@@ -713,6 +718,7 @@ class Table
      * ```
      *
      * @param \Cake\Database\Schema\TableSchema $schema The table definition fetched from database.
+     *
      * @return \Cake\Database\Schema\TableSchema the altered schema
      */
     protected function _initializeSchema(TableSchema $schema)
@@ -727,6 +733,7 @@ class Table
      * using the Schema\Table instance.
      *
      * @param string $field The field to check for.
+     *
      * @return bool True if the field exists, false if it does not.
      */
     public function hasField($field)
@@ -740,6 +747,7 @@ class Table
      * Sets the primary key field name.
      *
      * @param string|array $key Sets a new name to be used as primary key
+     *
      * @return $this
      */
     public function setPrimaryKey($key)
@@ -757,7 +765,7 @@ class Table
     public function getPrimaryKey()
     {
         if ($this->_primaryKey === null) {
-            $key = (array)$this->getSchema()->primaryKey();
+            $key = (array) $this->getSchema()->primaryKey();
             if (count($key) === 1) {
                 $key = $key[0];
             }
@@ -771,6 +779,7 @@ class Table
      * Sets the display field.
      *
      * @param string $key Name to be used as display field.
+     *
      * @return $this
      */
     public function setDisplayField($key)
@@ -789,7 +798,7 @@ class Table
     {
         if ($this->_displayField === null) {
             $schema = $this->getSchema();
-            $primary = (array)$this->getPrimaryKey();
+            $primary = (array) $this->getPrimaryKey();
             $this->_displayField = array_shift($primary);
             if ($schema->getColumn('title')) {
                 $this->_displayField = 'title';
@@ -819,7 +828,7 @@ class Table
             }
 
             $alias = Inflector::classify(Inflector::underscore(substr(array_pop($parts), 0, -5)));
-            $name = implode('\\', array_slice($parts, 0, -1)) . '\\Entity\\' . $alias;
+            $name = implode('\\', array_slice($parts, 0, -1)).'\\Entity\\'.$alias;
             if (!class_exists($name)) {
                 return $this->_entityClass = $default;
             }
@@ -839,7 +848,9 @@ class Table
      * Sets the class used to hydrate rows for this table.
      *
      * @param string $name The name of the class to use
+     *
      * @throws \Cake\ORM\Exception\MissingEntityException when the entity class cannot be found
+     *
      * @return $this
      */
     public function setEntityClass($name)
@@ -872,10 +883,13 @@ class Table
      *
      * Behaviors are generally loaded during Table::initialize().
      *
-     * @param string $name The name of the behavior. Can be a short class reference.
-     * @param array $options The options for the behavior to use.
-     * @return $this
+     * @param string $name    The name of the behavior. Can be a short class reference.
+     * @param array  $options The options for the behavior to use.
+     *
      * @throws \RuntimeException If a behavior is being reloaded.
+     *
+     * @return $this
+     *
      * @see \Cake\ORM\Behavior
      */
     public function addBehavior($name, array $options = [])
@@ -898,8 +912,10 @@ class Table
      * ```
      *
      * @param array $behaviors All of the behaviors to load.
-     * @return $this
+     *
      * @throws \RuntimeException If a behavior is being reloaded.
+     *
+     * @return $this
      */
     public function addBehaviors(array $behaviors)
     {
@@ -927,7 +943,9 @@ class Table
      * ```
      *
      * @param string $name The alias that the behavior was added with.
+     *
      * @return $this
+     *
      * @see \Cake\ORM\Behavior
      */
     public function removeBehavior($name)
@@ -951,8 +969,10 @@ class Table
      * Get a behavior from the registry.
      *
      * @param string $name The behavior alias to get from the registry.
-     * @return \Cake\ORM\Behavior
+     *
      * @throws \InvalidArgumentException If the behavior does not exist.
+     *
+     * @return \Cake\ORM\Behavior
      */
     public function getBehavior($name)
     {
@@ -973,6 +993,7 @@ class Table
      * Check if a behavior with the given alias has been loaded.
      *
      * @param string $name The behavior alias to check.
+     *
      * @return bool Whether or not the behavior exists.
      */
     public function hasBehavior($name)
@@ -1006,8 +1027,9 @@ class Table
      * This method will return the association object that was built.
      *
      * @param string $associated the alias for the target table. This is used to
-     * uniquely identify the association
-     * @param array $options list of options to configure the association definition
+     *                           uniquely identify the association
+     * @param array  $options    list of options to configure the association definition
+     *
      * @return \Cake\ORM\Association\BelongsTo
      */
     public function belongsTo($associated, array $options = [])
@@ -1052,8 +1074,9 @@ class Table
      * This method will return the association object that was built.
      *
      * @param string $associated the alias for the target table. This is used to
-     * uniquely identify the association
-     * @param array $options list of options to configure the association definition
+     *                           uniquely identify the association
+     * @param array  $options    list of options to configure the association definition
+     *
      * @return \Cake\ORM\Association\HasOne
      */
     public function hasOne($associated, array $options = [])
@@ -1104,8 +1127,9 @@ class Table
      * This method will return the association object that was built.
      *
      * @param string $associated the alias for the target table. This is used to
-     * uniquely identify the association
-     * @param array $options list of options to configure the association definition
+     *                           uniquely identify the association
+     * @param array  $options    list of options to configure the association definition
+     *
      * @return \Cake\ORM\Association\HasMany
      */
     public function hasMany($associated, array $options = [])
@@ -1158,8 +1182,9 @@ class Table
      * This method will return the association object that was built.
      *
      * @param string $associated the alias for the target table. This is used to
-     * uniquely identify the association
-     * @param array $options list of options to configure the association definition
+     *                           uniquely identify the association
+     * @param array  $options    list of options to configure the association definition
+     *
      * @return \Cake\ORM\Association\BelongsToMany
      */
     public function belongsToMany($associated, array $options = [])
@@ -1226,8 +1251,9 @@ class Table
      *
      * Would invoke the `findPublished` method.
      *
-     * @param string $type the type of query to perform
+     * @param string             $type    the type of query to perform
      * @param array|\ArrayAccess $options An array that will be passed to Query::applyOptions()
+     *
      * @return \Cake\ORM\Query The query builder
      */
     public function find($type = 'all', $options = [])
@@ -1244,8 +1270,9 @@ class Table
      * By default findAll() applies no conditions, you
      * can override this method in subclasses to modify how `find('all')` works.
      *
-     * @param \Cake\ORM\Query $query The query to find with
-     * @param array $options The options to use for the find
+     * @param \Cake\ORM\Query $query   The query to find with
+     * @param array           $options The options to use for the find
+     *
      * @return \Cake\ORM\Query The query builder
      */
     public function findAll(Query $query, array $options)
@@ -1306,16 +1333,17 @@ class Table
      * ]
      * ```
      *
-     * @param \Cake\ORM\Query $query The query to find with
-     * @param array $options The options for the find
+     * @param \Cake\ORM\Query $query   The query to find with
+     * @param array           $options The options for the find
+     *
      * @return \Cake\ORM\Query The query builder
      */
     public function findList(Query $query, array $options)
     {
         $options += [
-            'keyField' => $this->getPrimaryKey(),
+            'keyField'   => $this->getPrimaryKey(),
             'valueField' => $this->getDisplayField(),
-            'groupField' => null
+            'groupField' => null,
         ];
 
         if (isset($options['idField'])) {
@@ -1330,9 +1358,9 @@ class Table
             !is_object($options['groupField'])
         ) {
             $fields = array_merge(
-                (array)$options['keyField'],
-                (array)$options['valueField'],
-                (array)$options['groupField']
+                (array) $options['keyField'],
+                (array) $options['valueField'],
+                (array) $options['groupField']
             );
             $columns = $this->getSchema()->columns();
             if (count($fields) === count(array_intersect($fields, $columns))) {
@@ -1346,7 +1374,7 @@ class Table
         );
 
         return $query->formatResults(function ($results) use ($options) {
-            /** @var \Cake\Collection\CollectionInterface $results */
+            /* @var \Cake\Collection\CollectionInterface $results */
             return $results->combine(
                 $options['keyField'],
                 $options['valueField'],
@@ -1375,16 +1403,17 @@ class Table
      * ]);
      * ```
      *
-     * @param \Cake\ORM\Query $query The query to find with
-     * @param array $options The options to find with
+     * @param \Cake\ORM\Query $query   The query to find with
+     * @param array           $options The options to find with
+     *
      * @return \Cake\ORM\Query The query builder
      */
     public function findThreaded(Query $query, array $options)
     {
         $options += [
-            'keyField' => $this->getPrimaryKey(),
+            'keyField'    => $this->getPrimaryKey(),
             'parentField' => 'parent_id',
-            'nestingKey' => 'children'
+            'nestingKey'  => 'children',
         ];
 
         if (isset($options['idField'])) {
@@ -1396,7 +1425,7 @@ class Table
         $options = $this->_setFieldMatchers($options, ['keyField', 'parentField']);
 
         return $query->formatResults(function ($results) use ($options) {
-            /** @var \Cake\Collection\CollectionInterface $results */
+            /* @var \Cake\Collection\CollectionInterface $results */
             return $results->nest($options['keyField'], $options['parentField'], $options['nestingKey']);
         });
     }
@@ -1410,8 +1439,9 @@ class Table
      * composite keys when comparing values.
      *
      * @param array $options the original options passed to a finder
-     * @param array $keys the keys to check in $options to build matchers from
-     * the associated value
+     * @param array $keys    the keys to check in $options to build matchers from
+     *                       the associated value
+     *
      * @return array
      */
     protected function _setFieldMatchers($options, $keys)
@@ -1444,7 +1474,8 @@ class Table
      * Handles the logic executing of a worker inside a transaction.
      *
      * @param callable $worker The worker that will run inside the transaction.
-     * @param bool $atomic Whether to execute the worker inside a database transaction.
+     * @param bool     $atomic Whether to execute the worker inside a database transaction.
+     *
      * @return mixed
      */
     protected function _executeTransaction(callable $worker, $atomic = true)
@@ -1461,8 +1492,9 @@ class Table
     /**
      * Checks if the caller would have executed a commit on a transaction.
      *
-     * @param bool $atomic True if an atomic transaction was used.
+     * @param bool $atomic  True if an atomic transaction was used.
      * @param bool $primary True if a primary was used.
+     *
      * @return bool Returns true if a transaction was committed.
      */
     protected function _transactionCommitted($atomic, $primary)
@@ -1494,19 +1526,20 @@ class Table
      *   transaction (default: true)
      * - defaults: Whether to use the search criteria as default values for the new entity (default: true)
      *
-     * @param array|\Cake\ORM\Query $search The criteria to find existing
-     *   records by. Note that when you pass a query object you'll have to use
-     *   the 2nd arg of the method to modify the entity data before saving.
-     * @param callable|null $callback A callback that will be invoked for newly
-     *   created entities. This callback will be called *before* the entity
-     *   is persisted.
-     * @param array $options The options to use when saving.
+     * @param array|\Cake\ORM\Query $search   The criteria to find existing
+     *                                        records by. Note that when you pass a query object you'll have to use
+     *                                        the 2nd arg of the method to modify the entity data before saving.
+     * @param callable|null         $callback A callback that will be invoked for newly
+     *                                        created entities. This callback will be called *before* the entity
+     *                                        is persisted.
+     * @param array                 $options  The options to use when saving.
+     *
      * @return \Cake\Datasource\EntityInterface An entity.
      */
     public function findOrCreate($search, callable $callback = null, $options = [])
     {
         $options = new ArrayObject($options + [
-            'atomic' => true,
+            'atomic'   => true,
             'defaults' => true,
         ]);
 
@@ -1524,12 +1557,13 @@ class Table
     /**
      * Performs the actual find and/or create of an entity based on the passed options.
      *
-     * @param array|callable $search The criteria to find an existing record by, or a callable tha will
-     *   customize the find query.
-     * @param callable|null $callback A callback that will be invoked for newly
-     *   created entities. This callback will be called *before* the entity
-     *   is persisted.
-     * @param array $options The options to use when saving.
+     * @param array|callable $search   The criteria to find an existing record by, or a callable tha will
+     *                                 customize the find query.
+     * @param callable|null  $callback A callback that will be invoked for newly
+     *                                 created entities. This callback will be called *before* the entity
+     *                                 is persisted.
+     * @param array          $options  The options to use when saving.
+     *
      * @return \Cake\Datasource\EntityInterface An entity.
      */
     protected function _processFindOrCreate($search, callable $callback = null, $options = [])
@@ -1564,6 +1598,7 @@ class Table
      * Gets the query object for findOrCreate().
      *
      * @param array|\Cake\ORM\Query|string $search The criteria to find existing records by.
+     *
      * @return \Cake\ORM\Query
      */
     protected function _getFindOrCreateQuery($search)
@@ -1575,9 +1610,6 @@ class Table
         return $this->find()->where($search);
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function updateAll($fields, $conditions)
     {
         $query = $this->query();
@@ -1590,9 +1622,6 @@ class Table
         return $statement->rowCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function deleteAll($conditions)
     {
         $query = $this->query()
@@ -1604,12 +1633,9 @@ class Table
         return $statement->rowCount();
     }
 
-    /**
-     * {@inheritDoc}
-     */
     public function exists($conditions)
     {
-        return (bool)count(
+        return (bool) count(
             $this->find('all')
             ->select(['existing' => 1])
             ->where($conditions)
@@ -1620,9 +1646,7 @@ class Table
     }
 
     /**
-     * {@inheritDoc}
-     *
-     * ### Options
+     * ### Options.
      *
      * The options array accepts the following keys:
      *
@@ -1701,9 +1725,11 @@ class Table
      * ```
      *
      * @param \Cake\Datasource\EntityInterface $entity
-     * @param array $options
-     * @return \Cake\Datasource\EntityInterface|false
+     * @param array                            $options
+     *
      * @throws \Cake\ORM\Exception\RolledbackTransactionException If the transaction is aborted in the afterSave event.
+     *
+     * @return \Cake\Datasource\EntityInterface|false
      */
     public function save(EntityInterface $entity, $options = [])
     {
@@ -1711,12 +1737,12 @@ class Table
             $options = $options->toArray();
         }
 
-        $options = new ArrayObject((array)$options + [
-            'atomic' => true,
-            'associated' => true,
-            'checkRules' => true,
+        $options = new ArrayObject((array) $options + [
+            'atomic'        => true,
+            'associated'    => true,
+            'checkRules'    => true,
             'checkExisting' => true,
-            '_primary' => true
+            '_primary'      => true,
         ]);
 
         if ($entity->getErrors()) {
@@ -1749,10 +1775,13 @@ class Table
      * Try to save an entity or throw a PersistenceFailedException if the application rules checks failed,
      * the entity contains errors or the save was aborted by a callback.
      *
-     * @param \Cake\Datasource\EntityInterface $entity the entity to be saved
-     * @param array|\ArrayAccess $options The options to use when saving.
-     * @return \Cake\Datasource\EntityInterface
+     * @param \Cake\Datasource\EntityInterface $entity  the entity to be saved
+     * @param array|\ArrayAccess               $options The options to use when saving.
+     *
      * @throws \Cake\ORM\Exception\PersistenceFailedException When the entity couldn't be saved
+     *
+     * @return \Cake\Datasource\EntityInterface
+     *
      * @see \Cake\ORM\Table::save()
      */
     public function saveOrFail(EntityInterface $entity, $options = [])
@@ -1768,16 +1797,18 @@ class Table
     /**
      * Performs the actual saving of an entity based on the passed options.
      *
-     * @param \Cake\Datasource\EntityInterface $entity the entity to be saved
-     * @param \ArrayObject $options the options to use for the save operation
-     * @return \Cake\Datasource\EntityInterface|bool
-     * @throws \RuntimeException When an entity is missing some of the primary keys.
+     * @param \Cake\Datasource\EntityInterface $entity  the entity to be saved
+     * @param \ArrayObject                     $options the options to use for the save operation
+     *
+     * @throws \RuntimeException                                  When an entity is missing some of the primary keys.
      * @throws \Cake\ORM\Exception\RolledbackTransactionException If the transaction
-     *   is aborted in the afterSave event.
+     *                                                            is aborted in the afterSave event.
+     *
+     * @return \Cake\Datasource\EntityInterface|bool
      */
     protected function _processSave($entity, $options)
     {
-        $primaryColumns = (array)$this->getPrimaryKey();
+        $primaryColumns = (array) $this->getPrimaryKey();
 
         if ($options['checkExisting'] && $primaryColumns && $entity->isNew() && $entity->has($primaryColumns)) {
             $alias = $this->getAlias();
@@ -1836,11 +1867,13 @@ class Table
      * Handles the saving of children associations and executing the afterSave logic
      * once the entity for this table has been saved successfully.
      *
-     * @param \Cake\Datasource\EntityInterface $entity the entity to be saved
-     * @param \ArrayObject $options the options to use for the save operation
-     * @return bool True on success
+     * @param \Cake\Datasource\EntityInterface $entity  the entity to be saved
+     * @param \ArrayObject                     $options the options to use for the save operation
+     *
      * @throws \Cake\ORM\Exception\RolledbackTransactionException If the transaction
-     *   is aborted in the afterSave event.
+     *                                                            is aborted in the afterSave event.
+     *
+     * @return bool True on success
      */
     protected function _onSaveSuccess($entity, $options)
     {
@@ -1871,26 +1904,29 @@ class Table
     }
 
     /**
-     * Auxiliary function to handle the insert of an entity's data in the table
+     * Auxiliary function to handle the insert of an entity's data in the table.
      *
      * @param \Cake\Datasource\EntityInterface $entity the subject entity from were $data was extracted
-     * @param array $data The actual data that needs to be saved
-     * @return \Cake\Datasource\EntityInterface|bool
+     * @param array                            $data   The actual data that needs to be saved
+     *
      * @throws \RuntimeException if not all the primary keys where supplied or could
-     * be generated when the table has composite primary keys. Or when the table has no primary key.
+     *                           be generated when the table has composite primary keys. Or when the table has no primary key.
+     *
+     * @return \Cake\Datasource\EntityInterface|bool
      */
     protected function _insert($entity, $data)
     {
-        $primary = (array)$this->getPrimaryKey();
+        $primary = (array) $this->getPrimaryKey();
         if (empty($primary)) {
             $msg = sprintf(
                 'Cannot insert row in "%s" table, it has no primary key.',
                 $this->getTable()
             );
+
             throw new RuntimeException($msg);
         }
         $keys = array_fill(0, count($primary), null);
-        $id = (array)$this->_newId($primary) + $keys;
+        $id = (array) $this->_newId($primary) + $keys;
 
         // Generate primary keys preferring values in $data.
         $primary = array_combine($primary, $id);
@@ -1909,6 +1945,7 @@ class Table
                         implode(', ', $filteredKeys + $entity->extract(array_keys($primary))),
                         implode(', ', array_keys($primary))
                     );
+
                     throw new RuntimeException($msg);
                 }
             }
@@ -1953,12 +1990,13 @@ class Table
      * You can overwrite _newId() in your table class.
      *
      * @param array $primary The primary key columns to get a new ID for.
+     *
      * @return null|string|array Either null or the primary key value or a list of primary key values.
      */
     protected function _newId($primary)
     {
-        if (!$primary || count((array)$primary) > 1) {
-            return null;
+        if (!$primary || count((array) $primary) > 1) {
+            return;
         }
         $typeName = $this->getSchema()->getColumnType($primary[0]);
         $type = Type::build($typeName);
@@ -1967,16 +2005,18 @@ class Table
     }
 
     /**
-     * Auxiliary function to handle the update of an entity's data in the table
+     * Auxiliary function to handle the update of an entity's data in the table.
      *
      * @param \Cake\Datasource\EntityInterface $entity the subject entity from were $data was extracted
-     * @param array $data The actual data that needs to be saved
-     * @return \Cake\Datasource\EntityInterface|bool
+     * @param array                            $data   The actual data that needs to be saved
+     *
      * @throws \InvalidArgumentException When primary key data is missing.
+     *
+     * @return \Cake\Datasource\EntityInterface|bool
      */
     protected function _update($entity, $data)
     {
-        $primaryColumns = (array)$this->getPrimaryKey();
+        $primaryColumns = (array) $this->getPrimaryKey();
         $primaryKey = $entity->extract($primaryColumns);
 
         $data = array_diff_key($data, $primaryKey);
@@ -1988,12 +2028,14 @@ class Table
             $entityClass = get_class($entity);
             $table = $this->getTable();
             $message = "Cannot update `$entityClass`. The `$table` has no primary key.";
+
             throw new InvalidArgumentException($message);
         }
 
         if (!$entity->has($primaryColumns)) {
             $message = 'All primary key value(s) are needed for updating, ';
-            $message .= get_class($entity) . ' is missing ' . implode(', ', $primaryColumns);
+            $message .= get_class($entity).' is missing '.implode(', ', $primaryColumns);
+
             throw new InvalidArgumentException($message);
         }
 
@@ -2020,7 +2062,8 @@ class Table
      * error.
      *
      * @param \Cake\Datasource\EntityInterface[]|\Cake\ORM\ResultSet $entities Entities to save.
-     * @param array|\ArrayAccess $options Options used when calling Table::save() for each entity.
+     * @param array|\ArrayAccess                                     $options  Options used when calling Table::save() for each entity.
+     *
      * @return bool|\Cake\Datasource\EntityInterface[]|\Cake\ORM\ResultSet False on failure, entities list on success.
      */
     public function saveMany($entities, $options = [])
@@ -2061,8 +2104,6 @@ class Table
     }
 
     /**
-     * {@inheritDoc}
-     *
      * For HasMany and HasOne associations records will be removed based on
      * the dependent option. Join table records in BelongsToMany associations
      * will always be removed. You can use the `cascadeCallbacks` option
@@ -2086,47 +2127,50 @@ class Table
      * for the duration of the callbacks, this allows listeners to modify
      * the options used in the delete operation.
      *
-    public function delete(EntityInterface $entity, $options = [])
-    {
-        $options = new ArrayObject((array)$options + [
-            'atomic' => true,
-            'checkRules' => true,
-            '_primary' => true,
-        ]);
-
-        $success = $this->_executeTransaction(function () use ($entity, $options) {
-            return $this->_processDelete($entity, $options);
-        }, $options['atomic']);
-
-        if ($success && $this->_transactionCommitted($options['atomic'], $options['_primary'])) {
-            $this->dispatchEvent('Model.afterDeleteCommit', [
-                'entity' => $entity,
-                'options' => $options
-            ]);
-        }
-
-        return $success;
-    }
+     * public function delete(EntityInterface $entity, $options = [])
+     * {
+     * $options = new ArrayObject((array)$options + [
+     * 'atomic' => true,
+     * 'checkRules' => true,
+     * '_primary' => true,
+     * ]);
+     *
+     * $success = $this->_executeTransaction(function () use ($entity, $options) {
+     * return $this->_processDelete($entity, $options);
+     * }, $options['atomic']);
+     *
+     * if ($success && $this->_transactionCommitted($options['atomic'], $options['_primary'])) {
+     * $this->dispatchEvent('Model.afterDeleteCommit', [
+     * 'entity' => $entity,
+     * 'options' => $options
+     * ]);
+     * }
+     *
+     * return $success;
+     * }
      */
 
     /**
      * Try to delete an entity or throw a PersistenceFailedException if the entity is new,
      * has no primary key value, application rules checks failed or the delete was aborted by a callback.
      *
-     * @param \Cake\Datasource\EntityInterface $entity The entity to remove.
-     * @param array|\ArrayAccess $options The options for the delete.
-     * @return bool success
+     * @param \Cake\Datasource\EntityInterface $entity  The entity to remove.
+     * @param array|\ArrayAccess               $options The options for the delete.
+     *
      * @throws \Cake\ORM\Exception\PersistenceFailedException
+     *
+     * @return bool success
+     *
      * @see \Cake\ORM\Table::delete()
-    public function deleteOrFail(EntityInterface $entity, $options = [])
-    {
-        $deleted = $this->delete($entity, $options);
-        if ($deleted === false) {
-            throw new PersistenceFailedException($entity, ['delete']);
-        }
-
-        return $deleted;
-    }
+     * public function deleteOrFail(EntityInterface $entity, $options = [])
+     * {
+     * $deleted = $this->delete($entity, $options);
+     * if ($deleted === false) {
+     * throw new PersistenceFailedException($entity, ['delete']);
+     * }
+     *
+     * return $deleted;
+     * }
      */
 
     /**
@@ -2135,10 +2179,12 @@ class Table
      * Will delete the entity provided. Will remove rows from any
      * dependent associations, and clear out join tables for BelongsToMany associations.
      *
-     * @param \Cake\Datasource\EntityInterface $entity The entity to delete.
-     * @param \ArrayObject $options The options for the delete.
+     * @param \Cake\Datasource\EntityInterface $entity  The entity to delete.
+     * @param \ArrayObject                     $options The options for the delete.
+     *
      * @throws \InvalidArgumentException if there are no primary key values of the
-     * passed entity
+     *                                   passed entity
+     *
      * @return bool success
      */
     protected function _processDelete($entity, $options)
@@ -2147,9 +2193,10 @@ class Table
             return false;
         }
 
-        $primaryKey = (array)$this->getPrimaryKey();
+        $primaryKey = (array) $this->getPrimaryKey();
         if (!$entity->has($primaryKey)) {
             $msg = 'Deleting requires all primary key values.';
+
             throw new InvalidArgumentException($msg);
         }
 
@@ -2158,8 +2205,8 @@ class Table
         }
 
         $event = $this->dispatchEvent('Model.beforeDelete', [
-            'entity' => $entity,
-            'options' => $options
+            'entity'  => $entity,
+            'options' => $options,
         ]);
 
         if ($event->isStopped()) {
@@ -2172,7 +2219,7 @@ class Table
         );
 
         $query = $this->query();
-        $conditions = (array)$entity->extract($primaryKey);
+        $conditions = (array) $entity->extract($primaryKey);
         $statement = $query->delete()
             ->where($conditions)
             ->execute();
@@ -2183,15 +2230,15 @@ class Table
         }
 
         $this->dispatchEvent('Model.afterDelete', [
-            'entity' => $entity,
-            'options' => $options
+            'entity'  => $entity,
+            'options' => $options,
         ]);
 
         return $success;
     }
 
     /**
-     * Returns true if the finder exists for the table
+     * Returns true if the finder exists for the table.
      *
      * @param string $type name of finder to check
      *
@@ -2199,26 +2246,28 @@ class Table
      */
     public function hasFinder($type)
     {
-        $finder = 'find' . $type;
+        $finder = 'find'.$type;
 
         return method_exists($this, $finder) || ($this->_behaviors && $this->_behaviors->hasFinder($type));
     }
 
     /**
      * Calls a finder method directly and applies it to the passed query,
-     * if no query is passed a new one will be created and returned
+     * if no query is passed a new one will be created and returned.
      *
-     * @param string $type name of the finder to be called
-     * @param \Cake\ORM\Query $query The query object to apply the finder options to
-     * @param array $options List of options to pass to the finder
-     * @return \Cake\ORM\Query
+     * @param string          $type    name of the finder to be called
+     * @param \Cake\ORM\Query $query   The query object to apply the finder options to
+     * @param array           $options List of options to pass to the finder
+     *
      * @throws \BadMethodCallException
+     *
+     * @return \Cake\ORM\Query
      */
     public function callFinder($type, Query $query, array $options = [])
     {
         $query->applyOptions($options);
         $options = $query->getOptions();
-        $finder = 'find' . $type;
+        $finder = 'find'.$type;
         if (method_exists($this, $finder)) {
             return $this->{$finder}($query, $options);
         }
@@ -2236,10 +2285,12 @@ class Table
      * Provides the dynamic findBy and findByAll methods.
      *
      * @param string $method The method name that was fired.
-     * @param array $args List of arguments passed to the function.
-     * @return mixed
+     * @param array  $args   List of arguments passed to the function.
+     *
      * @throws \BadMethodCallException when there are missing arguments, or when
-     *  and & or are combined.
+     *                                 and & or are combined.
+     *
+     * @return mixed
      */
     protected function _dynamicFinder($method, $args)
     {
@@ -2284,7 +2335,7 @@ class Table
         } elseif ($hasOr !== false) {
             $fields = explode('_or_', $fields);
             $conditions = [
-            'OR' => $makeConditions($fields, $args)
+            'OR' => $makeConditions($fields, $args),
             ];
         } elseif ($hasAnd !== false) {
             $fields = explode('_and_', $fields);
@@ -2303,13 +2354,17 @@ class Table
      * they were on the table object.
      *
      * @param string $method name of the method to be invoked
-     * @param array $args List of arguments passed to the function
-     * @return mixed
+     * @param array  $args   List of arguments passed to the function
+     *
      * @throws \BadMethodCallException
+     *
+     * @return mixed
      */
     public function __call($method, $args)
     {
-        echo $method;print_r($args);exit;
+        echo $method;
+        print_r($args);
+        exit;
         if ($this->_behaviors && $this->_behaviors->hasMethod($method)) {
             return $this->_behaviors->call($method, $args);
         }
@@ -2327,8 +2382,10 @@ class Table
      * throws an exception.
      *
      * @param string $property the association name
-     * @return \Cake\ORM\Association
+     *
      * @throws \RuntimeException if no association with such name exists
+     *
+     * @return \Cake\ORM\Association
      */
     public function __get($property)
     {
@@ -2349,6 +2406,7 @@ class Table
      * exists for this table.
      *
      * @param string $property the association name
+     *
      * @return bool
      */
     public function __isset($property)
@@ -2363,6 +2421,7 @@ class Table
      * marshalling logic.
      *
      * @return \Cake\ORM\Marshaller
+     *
      * @see \Cake\ORM\Marshaller
      */
     public function marshaller()
@@ -2370,7 +2429,7 @@ class Table
         return new Marshaller($this);
     }
 
-    /**
+    /*
      * {@inheritDoc}
      *
      * By default all the associations on this table will be hydrated. You can
@@ -2439,7 +2498,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * {@inheritDoc}
      *
      * By default all the associations on this table will be hydrated. You can
@@ -2477,7 +2536,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * {@inheritDoc}
      *
      * When merging HasMany or BelongsToMany associations, all the entities in the
@@ -2523,7 +2582,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * {@inheritDoc}
      *
      * Those entries in `$entities` that cannot be matched to any record in
@@ -2558,7 +2617,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * Validator method used to check the uniqueness of a value for a column.
      * This is meant to be used with the validation API and not to be called
      * directly.
@@ -2620,7 +2679,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * Get the Model callbacks this table is interested in.
      *
      * By implementing the conventional methods a table class is assumed
@@ -2672,7 +2731,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * {@inheritDoc}
      *
      * @param \Cake\ORM\RulesChecker $rules The rules object to be modified.
@@ -2683,7 +2742,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * Gets a SaveOptionsBuilder instance.
      *
      * @param array $options Options to parse by the builder.
@@ -2694,7 +2753,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * Loads the specified associations in the passed entity or list of entities
      * by executing extra queries in the database and merging the results in the
      * appropriate properties.
@@ -2729,7 +2788,7 @@ class Table
     }
      */
 
-    /**
+    /*
      * {@inheritDoc}
     protected function validationMethodExists($method)
     {
@@ -2737,14 +2796,14 @@ class Table
     }
      */
 
-    /**
+    /*
     public function __debug()
     {
         return ['debug', 'three' => 2];
     }
      */
 
-    /**
+    /*
      * Returns an array that can be used to describe the internal state of this
      * object.
      *

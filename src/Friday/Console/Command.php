@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -19,7 +20,6 @@ namespace Friday\Console;
 
 class Command
 {
-
     /**
      * Argv Inputs from console parameters.
      *
@@ -37,7 +37,8 @@ class Command
     /**
      * Create a new console command instance.
      *
-     * @param  string|null  $basePath
+     * @param string|null $basePath
+     *
      * @return void
      */
     public function __construct($basePath = null)
@@ -46,23 +47,21 @@ class Command
             $basePath
         );
 
-        $this->argvInput = ($_SERVER['argv'][0] === "jarvis") ? array_slice($_SERVER['argv'], 1) : [] ;
+        $this->argvInput = ($_SERVER['argv'][0] === 'jarvis') ? array_slice($_SERVER['argv'], 1) : [];
 
         $this->commands = new \Friday\Console\Commands($app);
         define('APP_INIT', microtime(true));
 
         // run commands
-        if(count($this->argvInput)) {
+        if (count($this->argvInput)) {
             $command = $this->argvInput[0];
-            if($this->findCommand($command)) {
+            if ($this->findCommand($command)) {
                 $this->commands->$command();
-            }
-            else {
-                print "Command not found.\n";
+            } else {
+                echo "Command not found.\n";
                 $this->commands->help();
             }
-        }
-        else {
+        } else {
             $this->commands->help();
         }
         define('CMD_RUN', microtime(true));
@@ -73,7 +72,8 @@ class Command
      *
      * @return bool
      */
-    public function findCommand($command) {
+    public function findCommand($command)
+    {
         return method_exists($this->commands, $command);
     }
 }

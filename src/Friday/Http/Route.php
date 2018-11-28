@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -24,7 +25,7 @@ class Route implements RouteInterface
      *
      * @var array
      */
-    public $routes = NULL;
+    public $routes = null;
 
     /**
      * Route instance.
@@ -43,13 +44,14 @@ class Route implements RouteInterface
         //$this->path = $path;
         //$this->controllerClass = $controllerClass;
     }
- 
+
     /**
      * register a GET method route.
      *
-     * @param  string                $route
-     * @param  string|callback|null  $mix
-     * @param  string|null           $view
+     * @param string               $route
+     * @param string|callable|null $mix
+     * @param string|null          $view
+     *
      * @return bool
      */
     public function get($route, $mix = null, $view = null)
@@ -60,9 +62,10 @@ class Route implements RouteInterface
     /**
      * register a POST method route.
      *
-     * @param  string                $route
-     * @param  string|callback|null  $mix
-     * @param  string|null           $view
+     * @param string               $route
+     * @param string|callable|null $mix
+     * @param string|null          $view
+     *
      * @return bool
      */
     public function post($route, $mix = null, $view = null)
@@ -73,9 +76,10 @@ class Route implements RouteInterface
     /**
      * register a GET method route with view.
      *
-     * @param  string                $route
-     * @param  string|null           $view
-     * @param  array                 $data
+     * @param string      $route
+     * @param string|null $view
+     * @param array       $data
+     *
      * @return bool
      */
     public function view($route, $view = null, array $data = [])
@@ -86,51 +90,51 @@ class Route implements RouteInterface
     /**
      * register a route.
      *
-     * @param  string                $route
-     * @param  string|callback|null  $mix
-     * @param  string|null           $view
-     * @param  array                 $data
+     * @param string               $route
+     * @param string|callable|null $mix
+     * @param string|null          $view
+     * @param array                $data
+     *
      * @return void
      */
     public function register($method, $route, $mix = null, $view = null, $data = [])
     {
         $route = trim($route, '/ ');
-        $array = $route==='' ? [] : explode('/', $route);
+        $array = $route === '' ? [] : explode('/', $route);
         $size = count($array);
         $route = '/'.$route;
-        if(strpos($route, '{') !== false) {
+        if (strpos($route, '{') !== false) {
             $to = 0;
             $param = true;
-            foreach($array as $i => $uriPiece) {
+            foreach ($array as $i => $uriPiece) {
                 $uriPiece = trim($uriPiece);
-                if(strpos($uriPiece, '{') !== false) {
-                    if(
-                        strpos($uriPiece, '{') === 0 && 
-                        strpos($uriPiece, '}') !== false && 
+                if (strpos($uriPiece, '{') !== false) {
+                    if (
+                        strpos($uriPiece, '{') === 0 &&
+                        strpos($uriPiece, '}') !== false &&
                         strpos($uriPiece, '}') === (strlen($uriPiece) - 1)
                     ) {
                         $args[$uriPiece] = rtrim(ltrim($uriPiece, '{'), '}');
-                    }
-                    else {
+                    } else {
                         $args[$uriPiece] = null;
                     }
-                }
-                else {
-                    $to = $i+1;
+                } else {
+                    $to = $i + 1;
                     $args[$uriPiece] = null;
                 }
             }
             $base_size = $to;
             $base_route = array_slice($array, 0, $to, true);
-        }
-        else {
+        } else {
             $param = false;
             $base_size = $size;
             $args = null;
             $base_route = $route;
         }
         $base_route = is_array($base_route) ? implode('/', $base_route) : $base_route;
-        if(trim($base_route) === '') $base_route = '/';
+        if (trim($base_route) === '') {
+            $base_route = '/';
+        }
         self::$instance->routes[] = [$method, $route, $mix, $view, $data, $args, $size, $base_size, $param];
     }
 
@@ -145,6 +149,7 @@ class Route implements RouteInterface
             if ($a[7] == $b[7]) {
                 return 0;
             }
+
             return ($a[7] > $b[7]) ? -1 : 1;
         });
     }

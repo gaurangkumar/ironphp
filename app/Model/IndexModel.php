@@ -10,23 +10,21 @@ class IndexModel extends ModelService
 
     public function get($field = null, $id = null)
     {
-        if($id == null || (is_array($id) && count($id) == 0)) {
-            if($field == null) {
+        if ($id == null || (is_array($id) && count($id) == 0)) {
+            if ($field == null) {
                 return $this->table('user')->get();
-            }
-            else {
+            } else {
                 return $this->table('user')->get('name');
             }
-        }
-        else {
-            if($field == null) {
+        } else {
+            if ($field == null) {
                 return $this->table('user')->where($id)->get();
-            }
-            else {
+            } else {
                 return $this->table('user')->where($id)->get('name');
             }
         }
     }
+
     public function add()
     {
         //return $this->table('user')->add(['id'=>3, 'name'=>'pihu', 'user'=>'pihu', 'password'=>'123', 'status'=>1, ]);
@@ -34,10 +32,12 @@ class IndexModel extends ModelService
         //return $this->table('user')->add([3, 'pihu', 'pihu', '123', 1]);
         //return $this->table('user')->add(3, 'pihu', 'pihu', '123', 1);
     }
+
     public function update()
     {
         return $this->table('user')->where(['id'=>1])->update(['status'=>1, 'name'=>'illu']);
     }
+
     public function delete()
     {
         return $this->table('user')->where(['id'=>1])->delete();

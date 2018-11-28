@@ -1,23 +1,24 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
 
 return [
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Default Database Connection Name
      *--------------------------------------------------------------------------
@@ -29,7 +30,7 @@ return [
 
     'default' => env('DB_CONNECTION', 'mysql'),
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Database Connections
      *--------------------------------------------------------------------------
@@ -41,12 +42,12 @@ return [
     'connections' => [
 
         'mysql' => [
-            'host'     =>  env('DB_HOST', '127.0.0.1'),
-            'port'     =>  env('DB_PORT', '3306'),
-            'database' =>  env('DB_DATABASE', 'test'),
-            'username' =>  env('DB_USERNAME', 'root'),
-            'password' =>  env('DB_PASSWORD', ''),
-            'prefix'   =>  env('DB_PREFIX', '')
+            'host'     => env('DB_HOST', '127.0.0.1'),
+            'port'     => env('DB_PORT', '3306'),
+            'database' => env('DB_DATABASE', 'test'),
+            'username' => env('DB_USERNAME', 'root'),
+            'password' => env('DB_PASSWORD', ''),
+            'prefix'   => env('DB_PREFIX', ''),
         ],
 
     ],

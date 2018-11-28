@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -19,7 +20,6 @@ namespace Friday\Controller;
 
 class Controller
 {
-
     /**
      * The name of this controller. Controller names are plural, named after the model they manipulate.
      *
@@ -28,14 +28,14 @@ class Controller
     protected $name;
 
     /**
-     * An instance of a Request
+     * An instance of a Request.
      *
      * @var \Friday\Http\Request
      */
     public $request;
 
     /**
-     * An instance of a Response
+     * An instance of a Response.
      *
      * @var \Friday\Http\Response
      */
@@ -86,7 +86,7 @@ class Controller
     /**
      * Create a new Controller instance.
      *
-     * @return  void
+     * @return void
      */
     public function __construct()
     {
@@ -98,7 +98,8 @@ class Controller
      * Implement this method to avoid having to overwrite
      * the constructor and call parent.
      *
-     * @param  \Friday\Foundation\Application  $app
+     * @param \Friday\Foundation\Application $app
+     *
      * @return void
      */
     public function initialize($app)
@@ -111,6 +112,7 @@ class Controller
      * Returns the controller name.
      *
      * @return string
+     *
      * @since 3.6.0
      */
     public function getName()
@@ -122,7 +124,9 @@ class Controller
      * Sets the controller name.
      *
      * @param string $name Controller name.
+     *
      * @return $this
+     *
      * @since 3.6.0
      */
     public function setName($name)
@@ -135,46 +139,51 @@ class Controller
     /**
      * Renders view for given data, template file and layout.
      *
-     * @param string|null  $view
-     * @param string       $data
-     * @param string|null  $layout
+     * @param string|null $view
+     * @param string      $data
+     * @param string|null $layout
+     *
      * @return void.
      */
     public function renderView($viewPath = null, $data = [], $layout = null)
     {
         $renderedView = $this->view->renderView($viewPath, $data, $layout);
+
         return $renderedView;
     }
 
     /**
      * Renders view for given data, template file and layout.
      *
-     * @param string|null  $view
-     * @param string       $data
-     * @param string|null  $layout
+     * @param string|null $view
+     * @param string      $data
+     * @param string|null $layout
+     *
      * @return void.
      */
     public function renderTemplate($templatePath = null, $data = [])
     {
         $renderedTemplate = $this->view->renderTemplate($templatePath, $data);
+
         return $renderedTemplate;
     }
 
     /**
      * Create Instance of Model.
      *
-     * @param  string       $model   View to use for rendering
+     * @param string $model View to use for rendering
      *
      * @return \App\Model\{Name}Model
      */
     public function model($model)
     {
-        #$model = ucfirst($model).'Model';
+        //$model = ucfirst($model).'Model';
         $modelPath = self::$instance->app->findModel($model);
-        $modelClass = "App\\Model\\".$model;
+        $modelClass = 'App\\Model\\'.$model;
         $this->model = new $modelClass();
         self::$instance->modelService = new \Friday\Model\ModelService();
         self::$instance->modelService->initialize(self::$instance->app);
+
         return $this->model;
         //$appModel->handleModel($controller, $method);
     }
@@ -182,8 +191,8 @@ class Controller
     /**
      * Display View.
      *
-     * @param  string       $view  View to use for rendering
-     * @param  string       $data  Arguments to use
+     * @param string $view View to use for rendering
+     * @param string $data Arguments to use
      *
      * @return void
      */
@@ -196,8 +205,8 @@ class Controller
     /**
      * Display Template.
      *
-     * @param  string       $view  Template to use for rendering
-     * @param  string       $data  Arguments to use
+     * @param string $view Template to use for rendering
+     * @param string $data Arguments to use
      *
      * @return void
      */
@@ -210,22 +219,23 @@ class Controller
     /**
      * Handle new controller@method from route.
      *
-     * @param  string  $controller
-     * @param  string  $method
+     * @param string $controller
+     * @param string $method
      *
      * @return bool
      */
     public function handleController($controller, $method)
     {
-        if($this->app->findController($controller)) {
-            $controllerClass = "App\\Controller\\".$controller;
+        if ($this->app->findController($controller)) {
+            $controllerClass = 'App\\Controller\\'.$controller;
             $this->controller = new $controllerClass();
         }
-        if($this->app->hasMethod($this->controller, $method)) {
+        if ($this->app->hasMethod($this->controller, $method)) {
             self::$instance = $this;
             $output = $this->controller->$method();
             self::$instance = null;
         }
+
         return $output;
     }
 

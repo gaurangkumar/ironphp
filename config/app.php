@@ -1,23 +1,24 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
 
 return [
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application Name
      *--------------------------------------------------------------------------
@@ -30,7 +31,7 @@ return [
 
     'name' => env('APP_NAME', 'IronPHP'),
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application Environment
      *--------------------------------------------------------------------------
@@ -42,7 +43,7 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application Debug Mode
      *--------------------------------------------------------------------------
@@ -55,7 +56,7 @@ return [
 
     'debug' => env('APP_ENV', true),
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application URL
      *--------------------------------------------------------------------------
@@ -67,7 +68,7 @@ return [
 
     'url' => env('APP_ENV', 'http://localhost'),
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application Timezone
      *--------------------------------------------------------------------------
@@ -79,7 +80,7 @@ return [
 
     'timezone' => 'UTC',
 
-    /**
+    /*
      *--------------------------------------------------------------------------
      * Application Locale Configuration
      *--------------------------------------------------------------------------

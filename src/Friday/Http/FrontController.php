@@ -1,28 +1,29 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
 
 namespace Friday\Http;
 
-class FrontController {
-
+class FrontController
+{
     /*
     const DEFAULT_CONTROLLER = "IndexController";
     const DEFAULT_ACTION = "index";
-    
+
     protected $controller = self::DEFAULT_CONTROLLER;
     protected $action = self::DEFAULT_ACTION;
     */
@@ -32,16 +33,18 @@ class FrontController {
      *
      * @return void
      */
-    public function __construct(/*array $options = array()*/) {
+    public function __construct(/*array $options = array()*/)
+    {
     }
-    
+
     /**
      * Parse Uri and get path uri, params, server method.
      *
      * @return array
      */
-    public function parseUri() {
-        $uri = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+    public function parseUri()
+    {
+        $uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
         $uri = str_replace(['{', '}'], '', urldecode($uri));
         $extDir = dirname(dirname($_SERVER['SCRIPT_NAME']));
         $uri = str_replace($extDir, '', $uri);
@@ -49,42 +52,42 @@ class FrontController {
         $uri = empty($uri) ? '/' : $uri;
         $serverRequestMethod = $_SERVER['REQUEST_METHOD'];
         $params = $GLOBALS['_'.$serverRequestMethod];
-        if(!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
+        if (!empty($_SERVER['HTTPS']) && ('on' == $_SERVER['HTTPS'])) {
             $https = true;
-        }
-        else {
+        } else {
             $https = false;
         }
         $host = $_SERVER['HTTP_HOST'].$extDir;
         $ip = $_SERVER['REMOTE_ADDR'];
-        /**
+        /*
          * Test GET === _GET
          * _GET !== QUERY
          * Test POST === _POST
          */
-        if($serverRequestMethod === 'GET' && $diff = array_diff_assoc($params, $_GET)) {
+        if ($serverRequestMethod === 'GET' && $diff = array_diff_assoc($params, $_GET)) {
             echo '<pre>';
             var_dump($diff);
             var_dump($params);
             var_dump($_GET);
             echo '</pre>';
-            throw new \Exception("POST and _POST are not same at line ".__LINE__);
+
+            throw new \Exception('POST and _POST are not same at line '.__LINE__);
             exit;
         }
-        if($serverRequestMethod === 'POST' && $diff = array_diff_assoc($params, $_POST)) {
+        if ($serverRequestMethod === 'POST' && $diff = array_diff_assoc($params, $_POST)) {
             echo '<pre>';
             var_dump($diff);
             var_dump($params);
             var_dump($_POST);
             echo '</pre>';
-            throw new \Exception("POST and _POST are not same at line ".__LINE__);
+
+            throw new \Exception('POST and _POST are not same at line '.__LINE__);
             exit;
         }
-        
-        if($serverRequestMethod === 'POST') {
+
+        if ($serverRequestMethod === 'POST') {
             $params = ['GET' => $_GET, 'POST' => $params];
-        }
-        else {
+        } else {
             $params = ['GET' => $params, 'POST' => []];
         }
 
@@ -114,15 +117,16 @@ class FrontController {
         }
         */
     }
-    
+
     /**
      * Create Responce instance.
      *
      * @return object
      */
-    public function request() {
+    public function request()
+    {
         //if (empty($options)) {
-           $parse = $this->parseUri();
+        $parse = $this->parseUri();
         //}
         /*
         else {
@@ -130,7 +134,7 @@ class FrontController {
                 $this->setController($options["controller"]);
             }
             if (isset($options["action"])) {
-                $this->setAction($options["action"]);     
+                $this->setAction($options["action"]);
             }
             if (isset($options["params"])) {
                 $this->setParams($options["params"]);
@@ -145,7 +149,8 @@ class FrontController {
      *
      * @return object
      */
-    public function route() {
+    public function route()
+    {
         return new \Friday\Http\Route();
     }
 
@@ -154,7 +159,8 @@ class FrontController {
      *
      * @return object
      */
-    public function router() {
+    public function router()
+    {
         return new \Friday\Http\Router();
     }
 
@@ -163,17 +169,20 @@ class FrontController {
      *
      * @return object
      */
-    public function dispatcher() {
+    public function dispatcher()
+    {
         return new \Friday\Http\Dispatcher();
     }
 
     /**
      * Create Response instance.
      *
-     * @param  string  $serverProtocol
+     * @param string $serverProtocol
+     *
      * @return object
      */
-    public function response($serverProtocol) {
+    public function response($serverProtocol)
+    {
         return new \Friday\Http\Response($serverProtocol);
     }
 
@@ -187,7 +196,7 @@ class FrontController {
         $this->controller = $controller;
         return $this;
     }
-    
+
     public function setAction($action) {
         $reflector = new ReflectionClass($this->controller);
         if (!$reflector->hasMethod($action)) {
@@ -197,17 +206,16 @@ class FrontController {
         $this->action = $action;
         return $this;
     }
-    
+
     public function setParams(array $params) {
         $this->params = $params;
         return $this;
     }
     */
 
-    public function run() {
-        $controller = "Controller\\".$this->controller;
-        call_user_func_array(array($controller, $this->action), $this->params);
+    public function run()
+    {
+        $controller = 'Controller\\'.$this->controller;
+        call_user_func_array([$controller, $this->action], $this->params);
     }
-
-
 }

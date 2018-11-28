@@ -1,21 +1,23 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
 
 namespace Friday\Foundation;
+
 //use Closure; //comment does not affect on synonymous function, bound to closure & Application instance // *RECURSION*
 
 class Application
@@ -107,7 +109,8 @@ class Application
     /**
      * Create a new Friday application instance.
      *
-     * @param  string|null  $basePath
+     * @param string|null $basePath
+     *
      * @return void
      */
     public function __construct($basePath = null)
@@ -116,7 +119,7 @@ class Application
             $this->setBasePath($basePath);
         }
 
-        date_default_timezone_set("Asia/Kolkata");
+        date_default_timezone_set('Asia/Kolkata');
 
         $this->requireFile(
             $this->basePath('src/Friday/Helper/Helper.php')
@@ -124,7 +127,7 @@ class Application
 
         $this->setIntallTime();
 
-        $this->config['basePath'] = $this->basePath(); 
+        $this->config['basePath'] = $this->basePath();
 
         $getenv = new \Friday\Environment\GetEnv(
             $this->basePath(),
@@ -132,8 +135,8 @@ class Application
         );
         $getenv->load();
 
-        if(empty(env('APP_KEY'))) {
-            echo "APP_KEY is not defined in .env file, define it by command: php jarvis key";
+        if (empty(env('APP_KEY'))) {
+            echo 'APP_KEY is not defined in .env file, define it by command: php jarvis key';
         }
 
         $this->config['app'] = $this->requireFile(
@@ -145,7 +148,7 @@ class Application
         define('CONFIG_LOADED', microtime(true));
 
         $this->session = new \Friday\Helper\Session();
-        if(!$this->session->isRegistered()) {
+        if (!$this->session->isRegistered()) {
             $this->session->register();
         }
 
@@ -184,17 +187,15 @@ class Application
 
             $appController = new \Friday\Controller\Controller();
             $appController->initialize($this);
-            if($action[0] == 'output') {
+            if ($action[0] == 'output') {
                 $output = $action[1];
-            }
-            elseif($action[0] == 'controller_method') {
+            } elseif ($action[0] == 'controller_method') {
                 $controller = $action[1];
                 $method = $action[2];
                 ob_start();
                 $appController->handleController($controller, $method);
                 $output = ob_get_clean();
-            }
-            elseif($action[0] == 'view') {
+            } elseif ($action[0] == 'view') {
                 $view = $action[1];
                 $data = $action[2];
                 $viewPath = $this->findView($view);
@@ -221,7 +222,8 @@ class Application
     /**
      * Set the base path for the application.
      *
-     * @param  string  $basePath
+     * @param string $basePath
+     *
      * @return $this
      */
     public function setBasePath($basePath)
@@ -234,7 +236,8 @@ class Application
     /**
      * Get the base path of the IronPHP installation.
      *
-     * @param  string  $path Optionally, a path to append to the base path
+     * @param string $path Optionally, a path to append to the base path
+     *
      * @return string
      */
     public function basePath($path = '')
@@ -245,15 +248,15 @@ class Application
     /**
      * Find a file.
      *
-     * @param  string  $path
+     * @param string $path
+     *
      * @return bool
      */
     public function findFile($path)
     {
-        if(file_exists($path) && is_file($path)) {
+        if (file_exists($path) && is_file($path)) {
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }
@@ -261,17 +264,17 @@ class Application
     /**
      * Find a Model.
      *
-     * @param  string  $model
-     * @return string  full model file path
+     * @param string $model
+     *
+     * @return string full model file path
      */
     public function findModel($model)
     {
         $file = $this->basePath("app/Model/$model.php");
-        if($this->findFile($file)) {
+        if ($this->findFile($file)) {
             return $file;
-        }
-        else {
-            throw new \Exception($file." Model file is missing.");
+        } else {
+            throw new \Exception($file.' Model file is missing.');
             exit;
         }
     }
@@ -279,17 +282,17 @@ class Application
     /**
      * Find a View.
      *
-     * @param  string  $view
-     * @return string  full view file path
+     * @param string $view
+     *
+     * @return string full view file path
      */
     public function findView($view)
     {
         $file = $this->basePath("app/View/$view.php");
-        if($this->findFile($file)) {
+        if ($this->findFile($file)) {
             return $file;
-        }
-        else {
-            throw new \Exception($file." View file is missing.");
+        } else {
+            throw new \Exception($file.' View file is missing.');
             exit;
         }
     }
@@ -297,23 +300,21 @@ class Application
     /**
      * Find a Template.
      *
-     * @param  string  $template
-     * @return string  full template file path
+     * @param string $template
+     *
+     * @return string full template file path
      */
     public function findTemplate($template)
     {
         $file = $this->basePath("app/Template/$template");
-        if($this->findFile($file)) {
+        if ($this->findFile($file)) {
             return $file;
-        }
-        elseif($this->findFile($file.'.html')) {
+        } elseif ($this->findFile($file.'.html')) {
             return $file.'.html';
-        }
-        elseif($this->findFile($file.'.php')) {
+        } elseif ($this->findFile($file.'.php')) {
             return $file.'.php';
-        }
-        else {
-            throw new \Exception($file." Template file is missing.");
+        } else {
+            throw new \Exception($file.' Template file is missing.');
             exit;
         }
     }
@@ -321,17 +322,17 @@ class Application
     /**
      * Find a Controller.
      *
-     * @param  string  $controller
+     * @param string $controller
+     *
      * @return bool
      */
     public function findController($controller)
     {
         $file = $this->basePath("app/Controller/$controller.php");
-        if($this->findFile($file)) {
+        if ($this->findFile($file)) {
             return true;
-        }
-        else {
-            throw new \Exception($file." Controller file is missing.");
+        } else {
+            throw new \Exception($file.' Controller file is missing.');
             exit;
         }
     }
@@ -339,17 +340,17 @@ class Application
     /**
      * Check if Controller has method or not.
      *
-     * @param  Object  $controllerObj
-     * @param  string  $method
+     * @param object $controllerObj
+     * @param string $method
+     *
      * @return bool
      */
     public function hasMethod($controllerObj, $method)
     {
-        if(method_exists($controllerObj, $method)) {
+        if (method_exists($controllerObj, $method)) {
             return true;
-        }
-        else {
-            throw new \Exception($method." method is missing in ".get_class($controllerObj)."Controller.");
+        } else {
+            throw new \Exception($method.' method is missing in '.get_class($controllerObj).'Controller.');
             exit;
         }
     }
@@ -357,16 +358,16 @@ class Application
     /**
      * Require a file.
      *
-     * @param  string  $file
+     * @param string $file
+     *
      * @return void
      */
     public function requireFile($file)
     {
-        if($this->findFile($file)) {
-            return require($file);
-        }
-        else {
-            throw new \Exception($file." file is missing.");
+        if ($this->findFile($file)) {
+            return require $file;
+        } else {
+            throw new \Exception($file.' file is missing.');
             exit;
         }
     }
@@ -379,7 +380,7 @@ class Application
     public function setIntallTime()
     {
         $file = $this->basePath('app/install');
-        if(!file_exists($file)) {
+        if (!file_exists($file)) {
             $content = json_encode(['time'=>time(), 'version' => $this->version()]);
             file_put_contents($file, $content);
         }
@@ -393,15 +394,15 @@ class Application
     public function getIntallTime()
     {
         $file = $this->basePath('app/install');
-        if(!file_exists($file)) {
+        if (!file_exists($file)) {
             $data = ['time'=>time(), 'version' => $this->version()];
             $content = json_encode($data);
             file_put_contents($file, $content);
-        }
-        else {
+        } else {
             $content = file_get_contents($file);
             $data = json_decode($content);
         }
+
         return $data;
     }
 
@@ -412,36 +413,36 @@ class Application
      */
     public function setKey()
     {
-        $appKey='';
-        for($i=0;$i<32;$i++) {
-            $appKey.=chr(rand(0,255));
+        $appKey = '';
+        for ($i = 0; $i < 32; $i++) {
+            $appKey .= chr(rand(0, 255));
         }
         $appKey = 'base64:'.base64_encode($appKey);
         $file = $this->basePath('.env');
         $lines = $this->parseEnvFile($file);
         $flag = false;
-        foreach($lines as $i => $line) {
+        foreach ($lines as $i => $line) {
             $lines[$i] = trim($line);
             $lines[$i] = trim($line, "\n");
-            if(strpos($line, 'APP_KEY') !== false) {
+            if (strpos($line, 'APP_KEY') !== false) {
                 $data = explode('=', $line, 2);
-                if(!isset($data[1]) || trim($data[1]) == '') {
-                    $lines[$i] = "APP_KEY=".$appKey;
+                if (!isset($data[1]) || trim($data[1]) == '') {
+                    $lines[$i] = 'APP_KEY='.$appKey;
                     $flag = true;
                 }
             }
         }
-        if($flag == false) {
-            $lines = ["APP_KEY=".$appKey] + $lines;
+        if ($flag == false) {
+            $lines = ['APP_KEY='.$appKey] + $lines;
         }
         $data = implode("\n", $lines);
-        if(file_put_contents($file, $data)) {
+        if (file_put_contents($file, $data)) {
             putenv("APP_KEY=$appKey");
             $_ENV['APP_KEY'] = $appKey;
             $_SERVER['APP_KEY'] = $appKey;
+
             return true;
-        }
-        else {
+        } else {
             throw new \Exception('Failed to write in .env file.');
         }
     }
@@ -449,7 +450,7 @@ class Application
     /**
      * Parse .env file gets its lines in array.
      *
-     * @param  string  $file
+     * @param string $file
      *
      * @return array
      */
@@ -465,9 +466,10 @@ class Application
     /**
      * Ensures the given filePath is readable.
      *
-     * @throws \Exception
      *
-     * @param  string  $file
+     * @param string $file
+     *
+     * @throws \Exception
      *
      * @return void
      */

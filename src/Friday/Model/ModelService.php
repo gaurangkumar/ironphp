@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -59,7 +60,8 @@ class ModelService
     /**
      * Initialize ModelService instance.
      *
-     * @param  \Friday\Foundation\Application  $app
+     * @param \Friday\Foundation\Application $app
+     *
      * @return void
      */
     public function initialize($app)
@@ -70,14 +72,16 @@ class ModelService
     /**
      * Create Instance of Table.
      *
-     * @param  string  $tableName
+     * @param string $tableName
+     *
      * @return \App\Model\Table
      */
     public function table($tableName)
     {
-        if($this->dataMapper == null) {
+        if ($this->dataMapper == null) {
             $this->dataMapper = new \Friday\Model\DataMapper(self::$app->config);
         }
+
         return $this->dataMapper->getTable($tableName, $this->getPagination());
     }
 
@@ -88,16 +92,18 @@ class ModelService
      */
     private function getPagination()
     {
-        if($this->pagination == null) {
+        if ($this->pagination == null) {
             $this->pagination = new \Friday\Helper\Pagination();
         }
+
         return $this->pagination;
     }
 
     /**
      * Get pagination html.
      *
-     * @param  string $urlstr
+     * @param string $urlstr
+     *
      * @return string
      */
     public function getPaginationHtml($urlstr = '?')

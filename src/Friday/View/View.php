@@ -1,16 +1,17 @@
 <?php
 /**
  * IronPHP : PHP Development Framework
- * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
+ * Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP).
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @package       IronPHP
  * @copyright     Copyright (c) IronPHP (https://github.com/IronPHP/IronPHP)
- * @link          
+ *
+ * @link
  * @since         0.0.1
+ *
  * @license       MIT License (https://opensource.org/licenses/mit-license.php)
  * @auther        Gaurang Parmar <gaurangkumarp@gmail.com>
  */
@@ -19,7 +20,6 @@ namespace Friday\View;
 
 class View
 {
-
     /**
      * All Tags used for rendering html page.
      *
@@ -27,23 +27,23 @@ class View
      */
     private $tags = [
         '!doctype' => false,
-        'html' => true,
-        'meta' => false,
-        'head' => true,
-        'body' => true,
-        'title' => true,
-        'p' => true,
-        'pre' => true,
-        'span' => true,
-        'div' => true,
-        'header' => true,
-        'footer' => true,
-        'script' => true,
-        'style' => true,
-        'link' => false,
-        'base' => false,
-        'a' => true,
-        'i' => true
+        'html'     => true,
+        'meta'     => false,
+        'head'     => true,
+        'body'     => true,
+        'title'    => true,
+        'p'        => true,
+        'pre'      => true,
+        'span'     => true,
+        'div'      => true,
+        'header'   => true,
+        'footer'   => true,
+        'script'   => true,
+        'style'    => true,
+        'link'     => false,
+        'base'     => false,
+        'a'        => true,
+        'i'        => true,
     ];
 
     /**
@@ -52,19 +52,19 @@ class View
      * @var array
      */
     private $attr = [
-        '!doctype' => ['html' => NULL],
-        'html' => ['lang' => 'en'],
-        'meta' => ['charset' => 'utf-8', 'name' => [
+        '!doctype' => ['html' => null],
+        'html'     => ['lang' => 'en'],
+        'meta'     => ['charset' => 'utf-8', 'name' => [
                 'content' => [
-                    "description" => "IronPHP Application",
-                    "keywords" => "IronPHP, framework",
-                    "author" => "Gaurang Kumar",
-                    "viewport" => "width=device-width, initial-scale=1.0"
-                ]
-            ]
+                    'description' => 'IronPHP Application',
+                    'keywords'    => 'IronPHP, framework',
+                    'author'      => 'Gaurang Kumar',
+                    'viewport'    => 'width=device-width, initial-scale=1.0',
+                ],
+            ],
         ],
         'base' => ['target' => '_blank'],
-        'link' => ['rel' => "stylesheet", 'type' => "text/css"]
+        'link' => ['rel' => 'stylesheet', 'type' => 'text/css'],
     ];
 
     /**
@@ -72,7 +72,7 @@ class View
      *
      * @var string
      */
-    public $tempView = NULL;
+    public $tempView = null;
 
     /**
      * Name of the controller that created the View if any.
@@ -85,6 +85,7 @@ class View
      * Current passed params. Passed to View from the creating Controller for convenience.
      *
      * @var array
+     *
      * @deprecated 3.1.0 Use `$this->request->getParam('pass')` instead.
      */
     public $passedArgs = [];
@@ -121,20 +122,20 @@ class View
     public $request;
 
     /**
-     * Reference to the Response object
+     * Reference to the Response object.
      *
      * @var \Cake\Http\Response
      */
     public $response;
 
     /**
-     * Constructor
+     * Constructor.
      *
-     * @param \Cake\Http\ServerRequest|null $request Request instance.
-     * @param \Cake\Http\Response|null $response Response instance.
+     * @param \Cake\Http\ServerRequest|null $request      Request instance.
+     * @param \Cake\Http\Response|null      $response     Response instance.
      * @param \Cake\Event\EventManager|null $eventManager Event manager instance.
-     * @param array $viewOptions View options. See View::$_passedVars for list of
-     *   options which get set as class properties.
+     * @param array                         $viewOptions  View options. See View::$_passedVars for list of
+     *                                                    options which get set as class properties.
      */
     public function __construct()
     {
@@ -196,6 +197,7 @@ class View
      * Set path for templates files.
      *
      * @param string $path Path for template files.
+     *
      * @return $this
      */
     public function setTemplatePath($path)
@@ -219,6 +221,7 @@ class View
      * Set the view theme to use.
      *
      * @param string|null $theme Theme name.
+     *
      * @return $this
      */
     public function setTheme($theme)
@@ -244,6 +247,7 @@ class View
      * filename in /src/Template/<SubFolder> without the .ctp extension.
      *
      * @param string $name Template file name to set.
+     *
      * @return $this
      */
     public function setTemplate($name)
@@ -256,21 +260,21 @@ class View
     /**
      * Renders view with HTML tags and given data, template file and layout.
      *
-     * @param   array        $tags
-     * @return  void
+     * @param array $tags
+     *
+     * @return void
      */
     public function addRenderTags($tags)
     {
         $i[0] = 0;
-        foreach($tags as $tag => $text) {
-            if(is_array($text)) {
+        foreach ($tags as $tag => $text) {
+            if (is_array($text)) {
                 $i[1] = 0;
-                foreach($text as $tag1 => $text1) {
+                foreach ($text as $tag1 => $text1) {
                     $temp[$i[0]][$i[1]] = $this->createTag($tag1, $text1);
                 }
                 $temp[$i[0]] = implode("\n", $temp[$i[0]]);
-            }
-            else {
+            } else {
                 $temp[$i[0]] = $this->createTag($tag, $text);
             }
             $i[0]++;
@@ -286,7 +290,7 @@ class View
             }
             $args = implode(' ', $args);
         }
-        $tempView .= isset($args) ? ' '.$args.'>' : '>'; 
+        $tempView .= isset($args) ? ' '.$args.'>' : '>';
         if($child != NULL) {
             $tempView .= $text;
         }
@@ -313,30 +317,29 @@ class View
     /**
      * Renders view with HTML tags and given data, template file and layout.
      *
-     * @param   string   $tag
-     * @return  array
+     * @param string $tag
+     *
+     * @return array
      */
-    public function createTag($tag, $attr = NULL, $content = NULL)
+    public function createTag($tag, $attr = null, $content = null)
     {
         $temp = '<'.$tag;
-        if($attr != NULL) {
+        if ($attr != null) {
             $attr = (array) $attr;
-            foreach($attr as $key => $val) {
-                if(is_numeric($key)) {
+            foreach ($attr as $key => $val) {
+                if (is_numeric($key)) {
                     $val = strtolower(trim($val));
-                    if(isset($this->attr[$tag][$val])) {
-                        $args[] = $val.($this->attr[$tag][$val] == NULL ? '' : "=\"{$this->attr[$tag][$val]}\"");
-                    }
-                    else {
+                    if (isset($this->attr[$tag][$val])) {
+                        $args[] = $val.($this->attr[$tag][$val] == null ? '' : "=\"{$this->attr[$tag][$val]}\"");
+                    } else {
                         $args[] = $val;
                     }
-                }
-                else {
-                    $args[] = $key.($val == NULL ? '' : "=\"$val\"");
-                    if(isset($this->attr[$tag][$key])) {
-                        foreach($this->attr[$tag][$key] as $k => $v) {
-                            if(isset($v[$val])) {
-                                $args[] = $k.($v[$val] == NULL ? '' : "=\"{$v[$val]}\"");
+                } else {
+                    $args[] = $key.($val == null ? '' : "=\"$val\"");
+                    if (isset($this->attr[$tag][$key])) {
+                        foreach ($this->attr[$tag][$key] as $k => $v) {
+                            if (isset($v[$val])) {
+                                $args[] = $k.($v[$val] == null ? '' : "=\"{$v[$val]}\"");
                             }
                         }
                     }
@@ -345,21 +348,24 @@ class View
             $args = array_unique($args);
             $args = implode(' ', $args);
         }
-        $temp .= isset($args) ? ' '.$args.'>' : '>'; 
-        if($content != NULL) {
-            if(is_array($content)) {
-                array_walk($content, function(&$val, $key) { $val = trim($val); } );//5.3
-                $content = implode("\n",$content);
+        $temp .= isset($args) ? ' '.$args.'>' : '>';
+        if ($content != null) {
+            if (is_array($content)) {
+                array_walk($content, function (&$val, $key) {
+                    $val = trim($val);
+                }); //5.3
+                $content = implode("\n", $content);
                 $content = explode("\n", $content);
                 $content = preg_replace('/^/', "\t", $content);
-                #$content = preg_filter('/^/', "@", $content);
+                //$content = preg_filter('/^/', "@", $content);
                 $content = rtrim("\n".implode("\n", $content), "\n")."\n";
             }
             $temp .= $content;
         }
-        if($this->tags[$tag] === true) {
+        if ($this->tags[$tag] === true) {
             $temp .= '</'.$tag.'>';
         }
+
         return $temp;
 
         {
@@ -372,7 +378,7 @@ class View
             }
             $args = implode(' ', $args);
         }
-        $tempView .= isset($args) ? ' '.$args.'>' : '>'; 
+        $tempView .= isset($args) ? ' '.$args.'>' : '>';
         if($child != NULL) {
             $tempView .= $text;
         }
@@ -399,17 +405,18 @@ class View
     /**
      * Renders view with HTML tags and given data, template file and layout.
      *
-     * @param string|null  $viewPath
-     * @param string       $data
-     * @param string|null  $layout
-     * @return  $viewData.
+     * @param string|null $viewPath
+     * @param string      $data
+     * @param string|null $layout
+     *
+     * @return $viewData.
      */
     public function renderHtml($viewData = null, $data = [], $layout = null)
     {
-                /*
-                <div class="links">
-                </div>
-                */
+        /*
+        <div class="links">
+        </div>
+        */
         $doctype = $this->createTag('!doctype'); //['HTML', 'PUBLIC', '"-//W3C//DTD HTML 4.01//EN"', '"http://www.w3.org/TR/html4/strict.dtd"']);
         $charset = $this->createTag('meta', 'charset');
         $viewport = $this->createTag('meta', ['name' => 'viewport']);
@@ -423,9 +430,10 @@ class View
         //$i = $this->createTag('i', ['class' => 'fa fa-2x fa-github', 'aria-hidden' => "true"]);
         //$a = $this->createTag('a', ['href' => 'https://github.com/ironphp/ironphp', 'title' => 'IronPHP on GitHub', 'style' => 'align-self:center'], [$i]);
         $body = $this->createTag('body', null, [$viewData]);
-//print_r($head);exit;
+        //print_r($head);exit;
         $html = $this->createTag('html', null, [$head, $body]);
         $dom = $doctype."\n".$html;
+
         return $dom;
 
         {
@@ -439,8 +447,8 @@ class View
         $header = $this->createTag('header', null, [$div1, $div2]);
         */
 
-        #$html = ['!doctype' => null, 'html' => ['head' => null]];
-        #$this->addRenderTags($html);
+        //$html = ['!doctype' => null, 'html' => ['head' => null]];
+        //$this->addRenderTags($html);
 
         /*
         $this->addRenderTags('!doctype', NULL, NULL, false, NULL, 'doc');
@@ -455,20 +463,22 @@ class View
     /**
      * Renders view for given data, template file and layout.
      *
-     * @param string|null  $viewPath
-     * @param string       $data
-     * @param string|null  $layout
-     * @return  $viewData.
+     * @param string|null $viewPath
+     * @param string      $data
+     * @param string|null $layout
+     *
+     * @return $viewData.
      */
     public function render($viewPath = null, $data = [], $layout = null)
     {
         $viewData = file_get_contents($viewPath);
-        foreach($data as $key => $val) {
+        foreach ($data as $key => $val) {
             $viewData = str_replace('{{'.$key.'}}', $val, $viewData);
         }
-        if($layout == null) {
+        if ($layout == null) {
             $viewData = $this->renderHtml($viewData);
         }
+
         return $viewData;
         /*
         if ($this->hasRendered) {
@@ -501,5 +511,4 @@ class View
         return $this->Blocks->get('content');
         */
     }
-
 }
